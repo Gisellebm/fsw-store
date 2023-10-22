@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <AuthProvider>
           <Header />
-          {children}
+          <div className='flex-1'>{children}</div>
         </AuthProvider>
       </body>
     </html>
