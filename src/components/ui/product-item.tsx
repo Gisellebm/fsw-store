@@ -10,7 +10,7 @@ interface ProductItemProps {
 const ProductItem = ({ product }: ProductItemProps) => {
     //console.log('product.totalPrice:', product.totalPrice);
     return (
-        <div className="flex flex-col gap-4 max-w-[156px]">
+        <div className="flex flex-col gap-4 max-w-[170px]">
             <div className="relative bg-accent rounded-lg h-[170px] w-[156px] flex items-center justify-center">
                 <Image 
                     src={product.imageUrls[0]} 
