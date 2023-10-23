@@ -18,7 +18,7 @@ const CategoryItem = ({category}: CategoryItemProps) => {
     return (
         <Badge variant='outline' className='py-3 flex justify-center items-center gap-2 rounded-lg'>
             {categoryIcon[category.slug as keyof typeof categoryIcon]}
-            <span className="text-xs font-bold">{category.name}</span>
+            <span className="text-[14px] font-bold">{category.name}</span>
         </Badge>
     );
 }
