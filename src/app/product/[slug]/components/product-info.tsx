@@ -3,8 +3,9 @@
 import { Button } from "@/components/ui/button";
 import DiscountBadge from "@/components/ui/discount-badge";
 import { ProductWithTotalPrice } from "@/helpers/product";
+import { CartContext } from "@/providers/cart";
 import { ArrowLeftIcon, ArrowRightIcon, TruckIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 interface ProductInfoProps {
     product: ProductWithTotalPrice;
@@ -13,12 +14,18 @@ interface ProductInfoProps {
 const ProductInfo = ({product}: ProductInfoProps) => {
     const [quantity, setQuantity] = useState(1);
 
+    const { addProductToCart } = useContext(CartContext)
+
     const handledecreaseQuantityClick = () => {
         setQuantity((prev) => (prev === 1 ? prev : prev - 1))
     }
 
     const handleincreaseQuantityClick = () => {
         setQuantity((prev) => prev + 1)
+    }
+
+    const handleAddToCartClick = () => {
+        addProductToCart({...product, quantity})
     }
     return (
         <div className="flex flex-col px-5">
@@ -53,7 +60,12 @@ const ProductInfo = ({product}: ProductInfoProps) => {
                 <p className="text-sm text-justify antialiased text-[#A1A1A1]">{product.description}</p>
             </div>
 
-            <Button className="uppercase mt-8 font-bold">Adicionar ao carrinho</Button>
+            <Button 
+                className="uppercase mt-8 font-bold"
+                onClick={handleAddToCartClick}
+            >
+                Adicionar ao carrinho
+            </Button>
 
             <div className="flex items-center bg-[#2A2A2A] px-5 py-2 justify-between mt-5 rounded-lg">
                 <div className="flex items-center gap-3">
