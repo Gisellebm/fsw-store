@@ -2,11 +2,13 @@ import { prismaClient } from "@/lib/prisma";
 import ProductsImages from "./components/product-images";
 import ProductInfo from "./components/product-info";
 import { computeProductTotalPrice } from "@/helpers/product";
+import ProductList from "@/components/ui/product-list";
+
 
 interface ProductDetailPageProps {
     params: {
         slug: string;
-    };
+    }
 }
 
 const ProductDetailPage = async ({params: {slug}}: ProductDetailPageProps) => {
@@ -14,6 +16,19 @@ const ProductDetailPage = async ({params: {slug}}: ProductDetailPageProps) => {
         where: {
             slug: slug,
         },
+        include: {
+            category: {
+                include: {
+                    products: {
+                        where: {
+                            slug: {
+                                not: slug,
+                            }
+                        }
+                    }
+                }
+            }
+        }
     })
 
     if (!product) {
@@ -21,9 +36,11 @@ const ProductDetailPage = async ({params: {slug}}: ProductDetailPageProps) => {
     }
 
     return (
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 pb-8">
             <ProductsImages imageUrls={product.imageUrls} name={product.name} />
             <ProductInfo product={computeProductTotalPrice(product)}/>
+            <ProductList products={product.category.products}/>
+            
         </div>
     )
 }
